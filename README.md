@@ -1,17 +1,18 @@
 # base-unit-action-build-airbase
 
-The `BuildAirbase` unit action: a delayed action that builds an `Airbase` (`base-tile-improvement-airbase`) on the unit's own tile.
+The `BuildAirbase` unit action: a delayed action that builds an `Airbase` (`base-tile-improvement-airbase`) on the
+unit's own tile.
 
-- `BuildAirbase`: `new BuildAirbase(from, to, unit, ruleRegistry?, turn?, pendingEffects?)`. `perform()` starts the work, for as many
-  turns as the largest `MovementCost` answer for the action, divided by the unit's `WorkRate` (core-unit's
-  `DelayedAction`), and puts the unit in the `BuildingAirbase` busy state. When the work comes due, `BuildAirbase.complete(action)`
-  builds the `Airbase` through the `Built` rules of the action's rule registry.
+- `BuildAirbase`: `new BuildAirbase(from, to, unit, ruleRegistry?, turn?, pendingEffects?)`. `perform()` starts the
+  work, for as many turns as the largest `MovementCost` answer for the action, divided by the unit's `WorkRate`
+  (core-unit's `DelayedAction`), and puts the unit in the `BuildingAirbase` busy state. When the work comes due,
+  `BuildAirbase.complete(action)` builds the `Airbase` through the `Built` rules of the action's rule registry.
 - `Rules/BuildingAirbase`: the `Busy` rule the unit is in while it works.
-- `COMPLETE` (`base-unit-action-build-airbaseomplete`): the handler a save records for work in progress, registered with
-  `registerDelayedAction` when the module is loaded, as every delayed action is.
+- `COMPLETE` (`base-unit-action-build-airbase:complete`): the handler a save records for work in progress, registered
+  with `registerDelayedAction` when the module is loaded, as every delayed action is.
 
-The ruleset decides who may build one and where, with its own `Action` rule. base-unit-action-rules'
-`terrainJob(deps, Airbase)` gives the usual criteria: a unit that `Terraforms`, moves left, an `Available` rule allowing
-the `Airbase` there, and the unit's own tile. The turns it takes come from the ruleset's `MovementCost` rules.
+The ruleset decides who may build one and where, with its own `Action` rule. base-unit-action-rules' `terrainJob(deps,
+Airbase)` gives the usual criteria: a unit that `Terraforms`, moves left, an `Available` rule allowing the `Airbase`
+there, and the unit's own tile. The turns it takes come from the ruleset's `MovementCost` rules.
 
 A library: it has no `main` and registers no rules.
