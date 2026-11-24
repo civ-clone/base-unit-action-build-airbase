@@ -39,7 +39,9 @@ exports.BuildAirbase = BuildAirbase;
 (0, registerDelayedAction_1.default)({
     BusyRule: BuildingAirbase_1.default,
     handler: exports.COMPLETE,
-    action: (unit) => new BuildAirbase(unit.tile(), unit.tile(), unit),
+    // Built from the game the unit is loaded into, so finishing after a load writes where that game looks
+    //  (civ-clone/web-renderer#248).
+    action: (unit, context) => new BuildAirbase(unit.tile(), unit.tile(), unit, context.rules, context.turn, context.pendingEffects),
     complete: (unit, pendingEffect, action) => BuildAirbase.complete(action),
 });
 exports.default = BuildAirbase;
